@@ -15,16 +15,16 @@
                     $password = $_POST['passwprd'];
 
                     $stmt = $dbh->prepare($query);
-                    $stmt = execute(array(':userid'=> $userid,':token' => $token,':serial'=>$serial));
+                    $stmt = execute(array(':userid'=> $username,':token' => $password));
                     
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     if($row['id'] > 0)
                     {
-                        // func::createRecord($row['user_id'],$row['user_username']);
-                        // head`er("location:index.php");
+                        func::createRecord($dbh,$row['user_username'],$row['user_id']);
+                        header("location:index.php");
 
-                        echo func::createString(32);
+                        //echo func::createString(32);
                     }
                 
                 }
