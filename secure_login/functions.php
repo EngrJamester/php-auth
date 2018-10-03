@@ -4,7 +4,7 @@ class func{
 
     public static function checkLoginState($dbh)
     {
-        if(!isset($_SESSION['id'])|| !isset($_COOKIE['PHPSESSID']))
+        if(!isset($_SESSION['id']) || !isset($_COOKIE['PHPSESSID']))
         {
             session_start();
 
@@ -36,12 +36,14 @@ class func{
         }
     }
 
-    public static createRecord($dbh,$users_username,$users_id)
+    public static function createRecord($dbh, $users_username, $users_id)
     {
 
-        $query = "INSERT INTO sessions(sessions_userid,sessions_token,sessions_serial,sessions_date) values(:user_id,:token,:serial,"19/08/2017")";
+        // $query = 'INSERT INTO sessions(sessions_userid,sessions_token,sessions_serial,sessions_date) values(:user_id,:token,:serial),"19/08/2017")');
 
-        $dbh->prepare('DELETE FROM sessions where sessions_userid = :sessions_userid')->execute(array(' '));
+        $query = 'INSERT INTO sessions(sessions_userid,sessions_token,sessions_serial,sessions_date) values (:users_id,:token,:serial,"19/08/2017")';
+
+        $dbh->prepare('DELETE FROM sessions where sessions_userid = :sessions_userid')->execute(array(':sessions_userid'=>$users_id));
 
         $token = func::createString(20);
         $serial = func::createString(20);
@@ -49,9 +51,10 @@ class func{
         func::createCookie($users_username, $users_id, $token, $serial);
         func::createSession($users_username, $users_id);
 
-        $dbh->prepare($query);
-        $stmt->execute(array(':user_id'=> $users_id,':token'=>$token),':serial'=>$serial);
+        $stmt = $dbh->prepare($query);
+        $stmt->execute(array(':users_id'=> $users_id,':token'=>$token,':serial'=>$serial));
     }
+
 
     public static function createCookie($users_username, $users_id, $token, $serial)
     {
@@ -61,13 +64,13 @@ class func{
         setcookie('serial',$serial,time() + (86400) * 30, "/");
     }
 
-    public static function creatSession($users_username, $users_id, $token, $serial)
+    public static function createSession($users_username, $users_id)
     {
         if(!isset($_SESSION['id']) || !isset($_COOKIE['PHPSESSID']))
         {
             session_start();
         }
-        $_SESSION['user_username'] = $user_username;
+        $_SESSION['user_username'] = $users_username;
 
     }
 

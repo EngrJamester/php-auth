@@ -12,7 +12,7 @@ include_once('functions.php');
     <body>
         <header>
             <div class="center">
-                <img src="img/headr.jpg">
+                <!-- <img src="img/headr.jpg"> -->
             </div>
         </header>
 

@@ -12,14 +12,14 @@
                     $query = "SELECT * FROM users WHERE user_username = :username AND user_password = :password";
                     
                     $username = $_POST['username'];
-                    $password = $_POST['passwprd'];
+                    $password = $_POST['password'];
 
                     $stmt = $dbh->prepare($query);
-                    $stmt = execute(array(':userid'=> $username,':token' => $password));
+                    $stmt->execute(array(':username'=> $username,':password' => $password));
                     
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                    if($row['id'] > 0)
+                    if($row['user_id'] > 0)
                     {
                         func::createRecord($dbh,$row['user_username'],$row['user_id']);
                         header("location:index.php");
@@ -30,7 +30,7 @@
                 }
                 else
                 {
-                    echo `
+                    echo '
                         <form action = "login.php" method="post">
                             <label>Username</label><br/>
                             <input type="text" name="username"/><br/>
@@ -38,7 +38,7 @@
                             <input type="password" name="password"/><br/>
                             <input type="submit" value="login"/>
                         </form>
-                    `;
+                    ';
                 }
             }
            

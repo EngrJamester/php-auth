@@ -15,6 +15,7 @@ include_once("header.php");
         {
             header("location:login.php");
         }
+
     ?>
     </div>
 </section>

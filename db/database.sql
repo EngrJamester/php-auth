@@ -10,8 +10,8 @@ user_status int,
 constraint PK_ID primary key(user_id)
 );
 
-create table sessions(
-sessions_id int,
+create table IF NOT EXISTS sessions(
+sessions_id int auto_increment,
 sessions_userid int(10),
 sessions_token varchar(35),
 sessions_serial varchar(35),
@@ -24,4 +24,6 @@ values('1','admin','admin',1);
 
 select * from users;
 
-ALTER TABLE sessions ADD column sessions_userid int(10) after sessions_id;
+select * from sessions; 
+
+#ALTER TABLE sessions ADD column sessions_userid int(10) after sessions_id;
